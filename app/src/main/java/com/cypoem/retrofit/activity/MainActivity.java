@@ -40,7 +40,9 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-
+/*
+* https://blog.csdn.net/qq_20521573/article/details/70991850
+* */
 public class MainActivity extends BaseActivity {
     private Button btn;
     ProgressBar progressBar;
@@ -87,6 +89,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * Get请求
+     *
      * @param view
      */
     public void getData(View view) {
@@ -145,7 +148,7 @@ public class MainActivity extends BaseActivity {
         RequestBody pswBody = RequestBody.create(MediaType.parse("multipart/form-data"), "123123");
 
         RetrofitHelper.getApiService()
-                .uploadFiles(phoneBody,pswBody,fileBody)
+                .uploadFiles(phoneBody, pswBody, fileBody)
                 .subscribeOn(Schedulers.io())
                 .compose(this.<BasicResponse>bindToLifecycle())
                 .compose(ProgressUtils.<BasicResponse>applyProgressBar(this, "上传文件..."))
@@ -160,6 +163,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 下载文件
+     *
      * @param view
      */
     public void download(View view) {
@@ -196,6 +200,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 取消下载
+     *
      * @param view
      */
     public void cancelDownload(View view) {
@@ -236,7 +241,7 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    private File getFile(){
+    private File getFile() {
         String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
         String filePath = fileStoreDir + "/test/test.txt";
         FileUtils.createOrExistsFile(filePath);

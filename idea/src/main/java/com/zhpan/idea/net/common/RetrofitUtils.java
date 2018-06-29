@@ -22,6 +22,13 @@ import retrofit2.Retrofit;
 
 /**
  * Created by zhpan on 2018/3/21.
+ * 1. 设置日志拦截器，拦截服务器返回的json数据。Retrofit将请求到json数据直接转换成了实体类，但有时候我们需要查看json数据，
+ *    Retrofit并没有提供直接获取json数据的功能。因此我们需要自定义一个日志拦截器拦截json数据，并输入到控制台。
+ * 2. 设置Http请求头。给OkHttp 添加请求头拦截器，配置请求头信息。还可以为接口统一添加请求头数据。例如，把用户名、密码（或者token）统一添加到请求头。
+ *    后续每个接口的请求头中都会携带用户名、密码（或者token）数据，避免了为每个接口单独添加。
+ * 3. 为OkHttp配置缓存。同样可以同过拦截器实现缓存处理。包括控制缓存的最大生命值，控制缓存的过期时间。
+ * 4. 如果采用https，我们还可以在此处理证书校验以及服务器校验。
+ * 5. 为Retrofit添加GsonConverterFactory。
  */
 
 public class RetrofitUtils {
@@ -35,8 +42,8 @@ public class RetrofitUtils {
                 .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new HttpHeaderInterceptor())
                 .addNetworkInterceptor(new HttpCacheInterceptor())
-               // .sslSocketFactory(SslContextFactory.getSSLSocketFactoryForTwoWay())  // https认证 如果要使用https且为自定义证书 可以去掉这两行注释，并自行配制证书。
-               // .hostnameVerifier(new SafeHostnameVerifier())
+                // .sslSocketFactory(SslContextFactory.getSSLSocketFactoryForTwoWay())  // https认证 如果要使用https且为自定义证书 可以去掉这两行注释，并自行配制证书。
+                // .hostnameVerifier(new SafeHostnameVerifier())
                 .cache(cache);
     }
 
